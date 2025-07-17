@@ -280,36 +280,6 @@
     }
 }
 
-/* ダークモード対応（ユーザーの設定に基づく） */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text-color: #f8f9fa;
-        --white: #1a1a1a;
-        --sub-color: #2d2d2d;
-        --light-gray: #333333;
-        --border-color: #495057;
-    }
-    
-    body {
-        background-color: var(--white);
-        color: var(--text-color);
-    }
-    
-    .feature-card,
-    .service-card,
-    .testimonial-card,
-    .blog-card {
-        background-color: var(--light-gray);
-    }
-    
-    .pricing-table th {
-        background-color: var(--main-color);
-    }
-    
-    .pricing-table td {
-        background-color: var(--light-gray);
-    }
-}
 
 /* アクセシビリティ：アニメーション無効化設定 */
 @media (prefers-reduced-motion: reduce) {

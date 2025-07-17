@@ -2,14 +2,15 @@
 
 /* CSS変数でカラーパレット管理 */
 :root {
-    --main-color: #4A90E2;
-    --sub-color: #F5F5F5;
-    --accent-color: #FF6B6B;
-    --text-color: #333333;
+    --main-color: #E8B4B8;
+    --sub-color: #F5F2F0;
+    --accent-color: #D4A5A5;
+    --text-color: #5D4E75;
     --white: #ffffff;
-    --light-gray: #f8f9fa;
-    --border-color: #e9ecef;
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --light-gray: #F9F7F6;
+    --border-color: #E5DDD8;
+    --shadow: 0 2px 10px rgba(93, 78, 117, 0.1);
+    color-scheme: light only;
 }
 
 /* リセットCSS */
@@ -25,6 +26,7 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--white);
+    color-scheme: light only;
 }
 
 /* コンテナ */
