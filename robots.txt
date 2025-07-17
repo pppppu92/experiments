@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# サイトマップの場所
+Sitemap: https://example.com/sitemap.xml
+
+# クロール遅延（秒）
+Crawl-delay: 1
+
+# 特定のディレクトリを制限（必要に応じて調整）
+# Disallow: /admin/
+# Disallow: /private/
+
+# 画像のクロールを許可
+User-agent: Googlebot-Image
+Allow: /images/
+
+# 一般的な検索エンジンのボット
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

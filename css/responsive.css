@@ -1,0 +1,359 @@
+/* レスポンシブデザイン用CSS */
+
+/* タブレット以下のサイズ（768px以下） */
+@media (max-width: 768px) {
+    /* ナビゲーション */
+    .menu-toggle {
+        display: flex;
+    }
+    
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+    }
+    
+    nav.active {
+        display: block;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+    }
+    
+    nav li {
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 0;
+    }
+    
+    nav li:last-child {
+        border-bottom: none;
+    }
+    
+    /* ヒーローセクション */
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    /* セクションタイトル */
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    /* 特徴グリッド */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* サービスグリッド */
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* プロフィールセクション */
+    .profile-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .profile-image img,
+    .profile-placeholder {
+        width: 250px;
+        height: 250px;
+    }
+    
+    /* 料金表 */
+    .pricing-table {
+        overflow-x: auto;
+    }
+    
+    .pricing-table table {
+        min-width: 500px;
+    }
+    
+    /* 資格バッジ */
+    .qualifications {
+        grid-template-columns: 1fr;
+    }
+    
+    /* ギャラリー */
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    /* お客様の声 */
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* ブログ */
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* フッター */
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    /* コンテナの余白調整 */
+    .container {
+        padding: 0 15px;
+    }
+    
+    /* セクションの余白調整 */
+    .section {
+        padding: 3rem 0;
+    }
+    
+    /* ボタンの調整 */
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* スマートフォン（480px以下） */
+@media (max-width: 480px) {
+    /* ヘッダー */
+    .header-content {
+        padding: 0.8rem 0;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+        padding: 4rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+    }
+    
+    /* セクションタイトル */
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    /* カード要素 */
+    .feature-card,
+    .service-card,
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    /* プロフィール画像 */
+    .profile-image img,
+    .profile-placeholder {
+        width: 200px;
+        height: 200px;
+    }
+    
+    /* 料金表のフォントサイズ調整 */
+    .pricing-table th,
+    .pricing-table td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    /* ギャラリー */
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    
+    /* FAQ */
+    .faq-question {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .faq-answer.active {
+        padding: 1rem;
+    }
+    
+    /* 緊急連絡先 */
+    .emergency-contact {
+        padding: 1.5rem;
+    }
+    
+    .emergency-contact .phone {
+        font-size: 1.3rem;
+    }
+    
+    /* ブログカード */
+    .blog-content {
+        padding: 1rem;
+    }
+    
+    .blog-image {
+        height: 150px;
+    }
+    
+    /* セクション余白をさらに調整 */
+    .section {
+        padding: 2.5rem 0;
+    }
+    
+    /* コンテナ余白 */
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* 大画面（1200px以上） */
+@media (min-width: 1200px) {
+    /* 特徴グリッドを3列に */
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* サービスグリッドを3列に */
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* ブロググリッドを3列に */
+    .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* ギャラリーグリッドを4列に */
+    .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* お客様の声を2列に */
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 印刷用スタイル */
+@media print {
+    header,
+    footer,
+    .menu-toggle,
+    .btn {
+        display: none;
+    }
+    
+    main {
+        margin-top: 0;
+    }
+    
+    .section {
+        break-inside: avoid;
+        padding: 1rem 0;
+    }
+    
+    .hero {
+        background: none;
+        color: var(--text-color);
+    }
+    
+    .feature-card,
+    .service-card,
+    .testimonial-card {
+        box-shadow: none;
+        border: 1px solid var(--border-color);
+    }
+}
+
+/* ダークモード対応（ユーザーの設定に基づく） */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #f8f9fa;
+        --white: #1a1a1a;
+        --sub-color: #2d2d2d;
+        --light-gray: #333333;
+        --border-color: #495057;
+    }
+    
+    body {
+        background-color: var(--white);
+        color: var(--text-color);
+    }
+    
+    .feature-card,
+    .service-card,
+    .testimonial-card,
+    .blog-card {
+        background-color: var(--light-gray);
+    }
+    
+    .pricing-table th {
+        background-color: var(--main-color);
+    }
+    
+    .pricing-table td {
+        background-color: var(--light-gray);
+    }
+}
+
+/* アクセシビリティ：アニメーション無効化設定 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* フォーカス表示の改善 */
+@media (prefers-contrast: high) {
+    .btn:focus,
+    nav a:focus,
+    .faq-question:focus {
+        outline: 3px solid var(--accent-color);
+        outline-offset: 2px;
+    }
+}
+
+/* 横向きスマートフォン */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: 3rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    nav ul {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    nav li {
+        border-bottom: none;
+        padding: 0.5rem;
+    }
+}
