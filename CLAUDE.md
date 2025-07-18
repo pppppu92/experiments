@@ -13,87 +13,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Always output the Five Principles of Operation at the beginning of any work
 - Obtain user confirmation before generating/updating files or executing programs
 
-## Project Overview
-
-This is an experiments repository containing prototypes and test implementations. The current project is a postnatal doula (産後ドゥーラ) website for individual business owners providing meal delivery services.
-
-## Current Project: Postnatal Doula Website
-
-### Architecture
-- Static HTML/CSS/JavaScript website
-- Multi-page structure with semantic navigation
-- Responsive design targeting mobile-first approach
-- Japanese language content focused on trust and safety
-- Meal delivery service for new mothers
-
-### Key Design Requirements
-- **Color Scheme**: Coral (#FF7F50) based simple gradient design
-- **Text Color**: Black (#000000)
-- **No Emojis**: Emoji usage is prohibited
-- **Instagram Integration**: Include Instagram link
-- **Contact Form**: Initial consultation form URL: 'https://docs.google.com/forms/d/e/1FAIpQLScUJsiv0SRxWLoH6Np9LiawLZ_eJIppm2XiSc9yWRAuqg8s9Q/viewform?usp=dialog'
-- Maximum width: 1200px with appropriate margins
-- Responsive breakpoints: mobile (single column), tablet (2-column), desktop (3-column)
-
-### Directory Structure
-```
-/
-├── index.html                 # Top page
-├── about/index.html          # Profile/introduction
-├── services/index.html       # Services and pricing
-├── safety/index.html         # Safety measures and qualifications
-├── gallery/index.html        # Activity photos
-├── testimonials/index.html   # Customer testimonials
-├── faq/index.html           # FAQ with accordion
-├── contact/index.html       # Contact form
-├── policy/index.html        # Terms and privacy policy
-├── blog/index.html          # Blog
-├── css/
-│   ├── style.css
-│   └── responsive.css
-├── js/script.js
-├── images/
-│   ├── profile/
-│   ├── services/
-│   └── gallery/
-├── temp/                    # Reference materials
-│   ├── reference.html       # Original site to migrate from
-│   ├── reference.JPG
-│   ├── reference2.JPG
-│   └── style.css
-├── sitemap.xml
-├── robots.txt
-└── operational_rules.md
-```
-
-### Development Commands
-Since this is a static website project:
-- **No build process required**
-- **Local testing**: Open `index.html` in browser
-- **Development server**: Use `python -m http.server` or VS Code Live Server extension
-- **File watching**: Manual refresh or use live server extensions
-
-### Technical Requirements
-- Semantic HTML5 with proper heading structure
-- CSS with Flexbox/Grid for layouts
-- CSS custom properties for color management
-- JavaScript for navigation, FAQ accordion, and smooth scrolling
-- SEO optimization with structured data (JSON-LD)
-- Include sitemap.xml and robots.txt
-- Japanese font stack: '游ゴシック', 'Yu Gothic', 'メイリオ', Meiryo, sans-serif
-
-### Content Migration Guidelines
-- Reference temp/reference.html for content structure and information
-- Remove unnecessary content during migration
-- Focus on meal delivery services for postnatal care
-- Maintain trust and professionalism in all content
-- Include privacy protection notices for photos and testimonials
-- Emergency contact information prominently displayed
-- Qualification badges and certifications clearly visible
-
-### Current Implementation Status
-- Main website structure is implemented
-- CSS uses light pink-beige color scheme (needs update to coral)
-- JavaScript includes navigation, FAQ accordion, smooth scrolling
-- Structured data and SEO elements are in place
-- All pages have semantic HTML structure
+## Webサイト開発 仕様書
+1. プロジェクト概要
+目的: 産後の母親、育児相談を希望するユーザーからの依頼を受けるための入口となるWebサイト構築。SEOを意識したサイト構造とコンテンツで、新規顧客獲得を目指す。
+ターゲットユーザー: 産後の母親、育児に関する悩みを抱える保護者。
+サイトコンセプト: コーラル色を基調とした、シンプルで温かみのあるデザイン。ユーザーが情報を見つけやすく、安心して問い合わせできるサイト。
+2. 機能要件
+単一ページ構成: 全てのコンテンツを1ページに集約し、スクロールで閲覧できるシングルページデザイン。
+画像スライドショー: /images/ディレクトリ内に保存された画像を最大10枚まで自動的に抽出し、スライドショー形式で表示する。
+外部リンク設定:
+お問い合わせフォーム（URL: https://docs.google.com/forms/d/e/1FAIpQLScUJsiv0SRxWLoH6Np9LiawLZ_eJIppm2XiSc9yWRAuqg8s9Q/viewform?usp=dialog）へのリンク：クリック時に新しいタブで開く。
+Instagramへのリンク：クリック時に新しいタブで開く。
+レスポンシブデザイン: PC、タブレット、スマートフォンなど、様々なデバイスで最適に表示されるデザイン。
+3. ページ構成・コンテンツ
+単一ページ内に以下のセクションを上から順に配置する。
+自己紹介: 提供者個人の紹介文。
+一言メッセージ: 訪問者への歓迎メッセージやサービスへの想い。
+仕事の画像: スライドショー形式で表示される写真。
+サービス内容: 提供されるサービスの詳細、料金体系など。
+お問い合わせ: Googleフォームへのリンク、または簡単な案内文。
+SNSリンク: Instagramへのリンク。
+4. デザイン要件
+基調色: コーラル（#FF7F50）。
+配色: コーラルを基調とし、サイト要素に応じてコーラルのグラデーションを背景色として使用。全体的にシンプルで清潔感のあるデザインを目指す。
+デザイン参考: 既存のホームページ（https://r.goope.jp/doulahiromi/）の雰囲気を踏まえつつ、より洗練されたデザイン。
+5. 技術要件・運用
+開発言語・技術: HTML, CSS, JavaScriptを基本とし、シンプルで軽量なサイト構造。
+CMS: 導入しない。静的なHTMLファイルでの運用を前提とする。
+メンテナンス性: 更新や管理が容易な構造を重視。不要な機能は実装しない。
+SEO対策:
+ターゲットキーワード: 「産後ケア」「育児」「港区」「品川区」を意識したメタタグ、コンテンツの最適化。
+検索エンジンに認識されやすいクリーンなコード。
+運用体制: 提供者個人での更新・管理。
