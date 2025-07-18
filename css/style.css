@@ -2,14 +2,16 @@
 
 /* CSS変数でカラーパレット管理 */
 :root {
-    --main-color: #E8B4B8;
-    --sub-color: #F5F2F0;
-    --accent-color: #D4A5A5;
-    --text-color: #5D4E75;
+    --main-color: #FF7F50;
+    --sub-color: #FFE4E1;
+    --accent-color: #FF6347;
+    --gradient-primary: linear-gradient(135deg, #FFE4E1 0%, #FFCCCB 50%, #FFB6C1 100%);
+    --gradient-secondary: linear-gradient(135deg, #FFF5F5 0%, #FFE4E1 100%);
+    --text-color: #000000;
     --white: #ffffff;
-    --light-gray: #F9F7F6;
-    --border-color: #E5DDD8;
-    --shadow: 0 2px 10px rgba(93, 78, 117, 0.1);
+    --light-gray: #FFF8F8;
+    --border-color: #FFCCCB;
+    --shadow: 0 2px 15px rgba(255, 127, 80, 0.2);
     color-scheme: light only;
 }
 
@@ -25,7 +27,7 @@ body {
     font-family: '游ゴシック', 'Yu Gothic', 'メイリオ', Meiryo, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--white);
+    background: var(--gradient-secondary);
     color-scheme: light only;
 }
 
@@ -124,10 +126,11 @@ main {
 
 /* ヒーローセクション */
 .hero {
-    background: linear-gradient(135deg, var(--main-color), var(--sub-color));
-    color: var(--white);
+    background: var(--gradient-primary);
+    color: var(--text-color);
     text-align: center;
     padding: 6rem 0;
+    box-shadow: 0 4px 20px rgba(212, 165, 116, 0.3);
 }
 
 .hero h1 {
@@ -144,26 +147,27 @@ main {
 .btn {
     display: inline-block;
     padding: 1rem 2rem;
-    background-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--main-color), var(--accent-color));
     color: var(--white);
     text-decoration: none;
-    border-radius: 50px;
+    border-radius: 25px;
     font-weight: bold;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    box-shadow: 0 2px 10px rgba(212, 165, 116, 0.3);
 }
 
 .btn:hover {
-    background-color: #ff5252;
+    background: linear-gradient(135deg, var(--accent-color), var(--main-color));
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 4px 20px rgba(212, 165, 116, 0.5);
 }
 
 .btn-outline {
     background-color: transparent;
     border: 2px solid var(--main-color);
-    color: var(--main-color);
+    color: var(--white);
 }
 
 .btn-outline:hover {
@@ -183,16 +187,19 @@ main {
 }
 
 .feature-card {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--sub-color));
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 127, 80, 0.3);
+    background: linear-gradient(135deg, var(--white), #FFF8F5);
 }
 
 .feature-icon {
@@ -219,7 +226,7 @@ main {
 }
 
 .service-card {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--light-gray));
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 2rem;
@@ -229,7 +236,8 @@ main {
 
 .service-card:hover {
     border-color: var(--main-color);
-    box-shadow: var(--shadow);
+    box-shadow: 0 6px 20px rgba(255, 127, 80, 0.3);
+    background: linear-gradient(135deg, var(--white), var(--sub-color));
 }
 
 /* プロフィール */
@@ -328,10 +336,92 @@ main {
     color: var(--text-color);
     font-size: 1.1rem;
     transition: transform 0.3s ease;
+    overflow: hidden;
 }
 
 .gallery-item:hover {
     transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* 自動スライドショー */
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: 2rem auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.slideshow-wrapper {
+    position: relative;
+    height: 400px;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slideshow-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active,
+.dot:hover {
+    background-color: var(--main-color);
+    transform: scale(1.2);
+}
+
+/* 画像フェード効果 */
+.slideshow-slide {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* お客様の声 */
@@ -343,11 +433,17 @@ main {
 }
 
 .testimonial-card {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--sub-color));
     padding: 2rem;
     border-radius: 15px;
     box-shadow: var(--shadow);
     border-left: 5px solid var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    box-shadow: 0 8px 25px rgba(255, 127, 80, 0.3);
+    background: linear-gradient(135deg, var(--white), #FFF8F5);
 }
 
 .testimonial-text {
@@ -482,15 +578,18 @@ main {
 }
 
 .blog-card {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--sub-color));
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 .blog-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 127, 80, 0.3);
+    background: linear-gradient(135deg, var(--white), #FFF8F5);
 }
 
 .blog-image {
@@ -519,7 +618,7 @@ main {
 
 /* フッター */
 footer {
-    background-color: var(--text-color);
+    background-color: var(--main-color);
     color: var(--white);
     padding: 3rem 0 1rem;
 }
@@ -532,7 +631,7 @@ footer {
 }
 
 .footer-section h3 {
-    color: var(--main-color);
+    color: var(--white);
     margin-bottom: 1rem;
 }
 

@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
     initializeContactForm();
     initializeMenuToggle();
+    initializeSlideshow();
 });
 
 // ナビゲーション初期化
@@ -427,9 +428,138 @@ function initializeAccessibility() {
     document.body.insertBefore(skipLink, document.body.firstChild);
 }
 
+// スライドショー初期化
+function initializeSlideshow() {
+    const slideshows = document.querySelectorAll('.slideshow-container');
+    
+    slideshows.forEach(slideshow => {
+        const slides = slideshow.querySelectorAll('.slide');
+        const dots = slideshow.querySelectorAll('.dot');
+        
+        if (slides.length === 0) return;
+        
+        let currentSlide = 0;
+        let slideInterval;
+        
+        // スライド表示関数
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            if (index >= slides.length) currentSlide = 0;
+            if (index < 0) currentSlide = slides.length - 1;
+            
+            slides[currentSlide].classList.add('active');
+            if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+        }
+        
+        // 次のスライドへ
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+        
+        // 自動再生開始
+        function startAutoplay() {
+            slideInterval = setInterval(nextSlide, 4000); // 4秒間隔
+        }
+        
+        // 自動再生停止
+        function stopAutoplay() {
+            clearInterval(slideInterval);
+        }
+        
+        // ドットクリックイベント
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoplay();
+                currentSlide = index;
+                showSlide(currentSlide);
+                startAutoplay();
+            });
+        });
+        
+        // マウスホバーで自動再生一時停止
+        slideshow.addEventListener('mouseenter', stopAutoplay);
+        slideshow.addEventListener('mouseleave', startAutoplay);
+        
+        // 初期化
+        showSlide(0);
+        startAutoplay();
+    });
+}
+
+// 画像から自動スライドショーを生成
+function createSlideshowFromImages(containerId, imagePaths) {
+    const container = document.getElementById(containerId);
+    if (!container || !imagePaths.length) return;
+    
+    const slideshowHTML = `
+        <div class="slideshow-container">
+            ${imagePaths.map(path => `
+                <div class="slideshow-slide">
+                    <img src="${path}" alt="画像" loading="lazy">
+                </div>
+            `).join('')}
+            <button class="slideshow-nav prev">‹</button>
+            <button class="slideshow-nav next">›</button>
+            <div class="slideshow-dots">
+                ${imagePaths.map((_, index) => `
+                    <span class="slideshow-dot" data-slide="${index}"></span>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = slideshowHTML;
+    initializeSlideshow();
+}
+
+// /images/gallery/ 内の画像を自動取得してスライドショー作成
+function autoCreateGallerySlideshow() {
+    // 実際の画像パスを設定（HEIC形式は変換が必要な場合があります）
+    const galleryImages = [
+        './images/gallery/IMG_0043.HEIC',
+        './images/gallery/IMG_8808.HEIC',
+        './images/gallery/IMG_8887.HEIC',
+        './images/gallery/IMG_9378.HEIC',
+        './images/gallery/IMG_9662.HEIC'
+    ];
+    
+    // ギャラリーページの場合
+    const galleryContainer = document.getElementById('gallery-slideshow');
+    if (galleryContainer) {
+        createSlideshowFromImages('gallery-slideshow', galleryImages);
+    }
+    
+    // ホームページのギャラリーセクション
+    const homeGallery = document.querySelector('.gallery-grid');
+    if (homeGallery) {
+        // 既存のgallery-gridをスライドショーに置き換え
+        const slideshowHTML = `
+            <div class="slideshow-container">
+                ${galleryImages.map(path => `
+                    <div class="slideshow-slide">
+                        <img src="${path}" alt="ギャラリー画像" loading="lazy">
+                    </div>
+                `).join('')}
+                <button class="slideshow-nav prev">‹</button>
+                <button class="slideshow-nav next">›</button>
+                <div class="slideshow-dots">
+                    ${galleryImages.map((_, index) => `
+                        <span class="slideshow-dot" data-slide="${index}"></span>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        homeGallery.innerHTML = slideshowHTML;
+    }
+}
+
 // 初期化関数を実行
 document.addEventListener('DOMContentLoaded', function() {
     initializeLazyLoading();
     initializeAccessibility();
     resizeGoogleForm();
+    autoCreateGallerySlideshow();
 });
