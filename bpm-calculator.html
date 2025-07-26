@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BPM タップ計算機</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --text-color: #212529;
+            --button-size: 200px;
+            --button-size-mobile: 150px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .tap-counter {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .tap-button {
+            width: var(--button-size);
+            height: var(--button-size);
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            box-shadow: 
+                5px 5px 15px #d1d1d1,
+                -5px -5px 15px #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.1s ease;
+            margin: 0 auto 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tap-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                7px 7px 20px #d1d1d1,
+                -7px -7px 20px #ffffff;
+        }
+
+        .tap-button:active {
+            transform: translateY(0);
+            box-shadow: 
+                inset 5px 5px 15px #d1d1d1,
+                inset -5px -5px 15px #ffffff;
+        }
+
+        .tap-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+        }
+
+        .bpm-result {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bpm-value {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .reset-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reset-button:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .reset-button:active {
+            transform: translateY(0);
+        }
+
+        .pulse {
+            animation: pulse 0.2s ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .result-animation {
+            animation: resultShow 0.5s ease-out;
+        }
+
+        @keyframes resultShow {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+
+        @media (max-width: 767px) {
+            .title {
+                font-size: 2rem;
+            }
+
+            .tap-button {
+                width: var(--button-size-mobile);
+                height: var(--button-size-mobile);
+                font-size: 1rem;
+            }
+
+            .bpm-result {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">BPM タップ計算機</h1>
+        
+        <div class="tap-counter" id="tapCounter">
+            <span id="currentTaps">0</span> / 11
+        </div>
+        
+        <button class="tap-button" id="tapButton">
+            タップ！
+        </button>
+        
+        <div class="bpm-result" id="bpmResult">
+            11回タップしてBPMを測定
+        </div>
+        
+        <button class="reset-button" id="resetButton">
+            リセット
+        </button>
+    </div>
+
+    <script>
+        class TapCalculator {
+            constructor() {
+                this.tapTimes = [];
+                this.tapCount = 0;
+                this.bpm = null;
+                this.isCompleted = false;
+            }
+
+            handleTap() {
+                if (this.isCompleted) return;
+
+                const currentTime = Date.now();
+                this.tapTimes.push(currentTime);
+                this.tapCount++;
+
+                if (this.tapCount === 11) {
+                    this.calculateBPM();
+                    this.isCompleted = true;
+                }
+
+                return this.tapCount;
+            }
+
+            calculateBPM() {
+                if (this.tapTimes.length < 11) return;
+
+                const intervals = [];
+                for (let i = 1; i < this.tapTimes.length; i++) {
+                    intervals.push(this.tapTimes[i] - this.tapTimes[i - 1]);
+                }
+
+                const averageInterval = intervals.reduce((sum, interval) => sum + interval, 0) / intervals.length;
+                
+                this.bpm = Math.round(60000 / averageInterval);
+                return this.bpm;
+            }
+
+            reset() {
+                this.tapTimes = [];
+                this.tapCount = 0;
+                this.bpm = null;
+                this.isCompleted = false;
+            }
+
+            getBPM() {
+                return this.bpm;
+            }
+
+            getTapCount() {
+                return this.tapCount;
+            }
+
+            getIsCompleted() {
+                return this.isCompleted;
+            }
+        }
+
+        class UIController {
+            constructor() {
+                this.tapCounterElement = document.getElementById('currentTaps');
+                this.tapButtonElement = document.getElementById('tapButton');
+                this.bpmResultElement = document.getElementById('bpmResult');
+                this.resetButtonElement = document.getElementById('resetButton');
+            }
+
+            updateTapCount(count) {
+                this.tapCounterElement.textContent = count;
+                
+                this.tapButtonElement.classList.add('pulse');
+                setTimeout(() => {
+                    this.tapButtonElement.classList.remove('pulse');
+                }, 200);
+            }
+
+            updateBPM(bpm) {
+                this.bpmResultElement.innerHTML = `<span class="bpm-value">${bpm} mL/h</span>`;
+                
+                this.bpmResultElement.classList.add('result-animation');
+                setTimeout(() => {
+                    this.bpmResultElement.classList.remove('result-animation');
+                }, 500);
+            }
+
+            updateButtonState(isCompleted) {
+                this.tapButtonElement.disabled = isCompleted;
+                if (isCompleted) {
+                    this.tapButtonElement.textContent = '完了！';
+                } else {
+                    this.tapButtonElement.textContent = 'タップ！';
+                }
+            }
+
+            showResult(bpm) {
+                this.updateBPM(bpm);
+                this.updateButtonState(true);
+            }
+
+            reset() {
+                this.tapCounterElement.textContent = '0';
+                this.bpmResultElement.textContent = '11回タップしてBPMを測定';
+                this.updateButtonState(false);
+            }
+        }
+
+        const tapCalculator = new TapCalculator();
+        const uiController = new UIController();
+
+        function handleTapButtonClick() {
+            const tapCount = tapCalculator.handleTap();
+            uiController.updateTapCount(tapCount);
+
+            if (tapCalculator.getIsCompleted()) {
+                const bpm = tapCalculator.getBPM();
+                uiController.showResult(bpm);
+            }
+        }
+
+        function handleResetButtonClick() {
+            tapCalculator.reset();
+            uiController.reset();
+        }
+
+        document.getElementById('tapButton').addEventListener('click', handleTapButtonClick);
+        document.getElementById('tapButton').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            handleTapButtonClick();
+        });
+
+        document.getElementById('resetButton').addEventListener('click', handleResetButtonClick);
+
+        window.addEventListener('resize', function() {
+            
+        });
+    </script>
+</body>
+</html>
